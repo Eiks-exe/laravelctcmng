@@ -14,6 +14,6 @@ class DatabaseSeeder extends Seeder
         $this->call(PaysTableSeeder::class);
         $this->call(CommuneMartiniqueTableSeeder::class);
 
-        factory(\App\Contact::class, 10)->create();
+        factory(\App\Contact::class, 30)->create();
     }
 }

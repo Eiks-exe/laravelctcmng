@@ -33,7 +33,7 @@
         </div>
         <div class="d-flex justify-content-around">
             <button class="btn btn-primary w-25" type="submit">enregistrer</button>
-            <a class=" btn btn-danger w-25" href="">cancel</a>
+            <a class=" btn btn-danger w-25" href="{{route('contact.index')}}">cancel</a>
         </div>
     </form>
 @endsection

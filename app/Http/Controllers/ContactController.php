@@ -6,15 +6,22 @@ use App\City;
 use App\Contact;
 use App\Http\Requests\CreateValidation;
 use App\Http\Requests\EditValidation;
+use Illuminate\Http\Request;
 
 class ContactController extends Controller
 {
 
-    public function index()
+    public function index(Request $request)
     {
-        $contacts = \App\Contact::whereNotNull('mail')->with(['city', 'city.country'])->get() ;
-
-
+        $query = Contact::whereNotNull('mail')->with(['city','city.country']);
+        if ($request->filled('search')) {
+            $query->where(function($query) use ($request) {
+                foreach (['name', 'phone', 'website', 'mail'] as $colonne) {
+                    $query->orWhere($colonne, 'like', '%'.$request->get('search').'%');
+                }
+            });
+        }
+        $contacts = $query->orderBy('name')->paginate(15);
         return view('index', compact('contacts'));
 
     }
@@ -52,8 +59,8 @@ class ContactController extends Controller
 
     public function delete($id)
     {
-        $contact = Contact::where('id', $id)->firstOrFail();
-        $contact = \App\Contact::destroy($id);
+
+        Contact::destroy($id);
         request()->session()->flash('warning', 'L\' enregistrement a bien été supprimé');
         return redirect('contact');
     }

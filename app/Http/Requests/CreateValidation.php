@@ -30,6 +30,7 @@ class CreateValidation extends FormRequest
             'city' => [
                 'exists:countries',
             ],
+            'website' => ['nullable' , 'url']
         ];
     }
 }

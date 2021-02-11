@@ -37,6 +37,7 @@ class EditValidation extends FormRequest
                 'city' => [
                     'exists:countries',
                 ],
+            'website' => ['nullable' , 'url']
         ];
     }
 }
